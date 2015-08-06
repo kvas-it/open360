@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/')),
     url(r'^', include('django.contrib.auth.urls')),
-    url(r'^admin/', include(admin.site.urls))
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^reviews/', include('reviews.urls'))
 ]
