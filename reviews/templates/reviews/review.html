@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{{ review.review_template.name }} for {{ reivew.owner }}</h1>
+{% if answer_sheets %}
+    <ul>
+    {% for answer_sheet in answer_sheets %}
+      <li>{{answer_sheet.owner}} ({{answer_sheet.reviewer_class.name}})</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No reviewers yet.</p>
+{% endif %}
+{% endblock %}

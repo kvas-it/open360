@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 
 from . import models
@@ -16,7 +17,15 @@ def index(request):
 
 @login_required
 def review(request, review_id):
-    return HttpResponse('Review %s' % review_id)
+    review = get_object_or_404(models.Review, pk=review_id)
+    if review.owner != request.user:
+        raise PermissionDenied('Review belongs to another user')
+    answer_sheets = (models.AnswerSheet.objects
+            .filter(review=review)
+            .exclude(owner=request.user))
+    return render(request, 'reviews/review.html', {
+        'review': review, 'answer_sheets': answer_sheets
+    })
 
 
 @login_required
