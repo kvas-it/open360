@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-Index page
+<h1>Hello {{ request.user }}!</h1>
+<a href="{% url 'reviews:index' %}">Reviews</a>
 {% endblock %}
