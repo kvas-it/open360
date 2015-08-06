@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+{% if request.user.is_authenticated %}
 <h1>Hello {{ request.user }}!</h1>
 <a href="{% url 'reviews:index' %}">Reviews</a>
+{% else %}
+<h1>Hello stranger.</h1>
+{% endif %}
 {% endblock %}

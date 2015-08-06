@@ -56,7 +56,7 @@ ROOT_URLCONF = 'open360.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['open360/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'open360/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,3 +103,6 @@ LOGIN_URL = '/login/'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'open360/static')
+]
