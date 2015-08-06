@@ -53,4 +53,5 @@ class AnswerSheet(models.Model):
 
 class Answer(models.Model):
     answer_sheet = models.ForeignKey(AnswerSheet)
+    question = models.ForeignKey(Question)
     value = models.CharField(max_length=1024)
