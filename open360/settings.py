@@ -55,7 +55,7 @@ ROOT_URLCONF = 'open360.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['open360/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
