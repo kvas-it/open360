@@ -29,25 +29,20 @@ def review(request, review_id):
 
 
 def prepare_answer_data(answer_sheet):
-    answers = {}
-    for answer in models.Answer.objects.filter(answer_sheet=answer_sheet):
-        answers[answer.question.id] = answer
-    review_template = answer_sheet.review.review_template
+    """Prepare answer data for displaying the answer sheet form."""
     answer_data = []
-    for group in (models.QuestionGroup.objects
-                    .filter(review_template=review_template)
-                    .order_by('order')):
+    answers = answer_sheet.get_answers()
+    review_template = answer_sheet.review.review_template
+    for group in review_template.get_question_groups(ordered=True):
         group_rec = {
             'question_group': group,
             'questions': []
         }
         answer_data.append(group_rec)
-        for question in (models.Question.objects
-                            .filter(question_group=group)
-                            .order_by('order')):
+        for question in group.get_questions(ordered=True):
             question_rec = {
                 'question': question,
-                'answer': answers.get(question.id, None)
+                'answer_value': unicode(answers.get(question.id, ''))
             }
             group_rec['questions'].append(question_rec)
     return answer_data

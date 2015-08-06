@@ -11,6 +11,13 @@ class ReviewTemplate(models.Model):
     descr = models.CharField(max_length=4096)
     is_frozen = models.BooleanField()
 
+    def get_question_groups(self, ordered=False):
+        """Return question groups from this review template."""
+        ret = QuestionGroup.objects.filter(review_template=self)
+        if ordered:
+            ret = ret.order_by('order')
+        return ret
+
     def __unicode__(self):
         return self.name
 
@@ -31,6 +38,13 @@ class QuestionGroup(models.Model):
     name = models.CharField(max_length=200, unique=True)
     descr = models.CharField(max_length=4096)
     order = models.IntegerField(default=0)
+
+    def get_questions(self, ordered=False):
+        """Return questions from this question group."""
+        ret = Question.objects.filter(question_group=self)
+        if ordered:
+            ret = ret.order_by('order')
+        return ret
 
     def __unicode__(self):
         return (self.name + u' in review template: ' +
@@ -68,6 +82,16 @@ class AnswerSheet(models.Model):
     is_started = models.BooleanField()
     is_completed = models.BooleanField()
 
+    def get_answers(self):
+        """Return answers that belong to the answer sheet.
+
+        The return value is a dictionary: question_id -> answer.
+        """
+        answers = {}
+        for answer in Answer.objects.filter(answer_sheet=self):
+            answers[answer.question.id] = answer
+        return answers
+        
     def __unicode__(self):
         return (u'Answers of ' + unicode(self.owner) +
                 u' for ' + unicode(self.review))
