@@ -1,15 +1,21 @@
-.PHONY: env clean prep
+.PHONY: env clean db run
 
-prep: db.sqlite3
+PIP=__/bin/pip
+PYTHON=__/bin/python
+
+db: db.sqlite3
 
 env: __
 
 __:
 	virtualenv __
-	__/bin/pip install -r requirements.txt
+	${PIP} install -r requirements.txt
 
 clean:
 	rm -Rf __ db.sqlite3
 
-db.sqlite3: env
-	./manage.py migrate
+db.sqlite3: __
+	${PYTHON} manage.py migrate
+
+run: db.sqlite3
+	${PYTHON} manage.py runserver
