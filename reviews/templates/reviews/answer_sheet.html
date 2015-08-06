@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{{ review.review_template.name }} for {{ reivew.owner }}</h1>
+<p>
+Providing answers as {{ answer_sheet.reviewer_class.name }}.
+</p>
+{% for group_rec in answer_data %}
+<h2>{{ group_rec.question_group.name }}</h2>
+    <ul>
+    {% for question_rec in group_rec.questions %}
+        <li>
+	{{ question_rec.question.text }}: {{ question_rec.answer }}
+	</li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}
