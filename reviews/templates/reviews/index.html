@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>Your reviews</h1>
+{% if my_reviews %}
+    <ul>
+    {% for review in my_reviews %}
+        <li><a href="{% url 'review' review.id %}">
+          {{ review.review_template }}
+          {% if review.is_started %}
+              (started on {{ reivew.start_date }})
+          {% else %}
+              (not started)
+          {% endif %}
+        </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no reviews.</p>
+{% endif %}
+
+<hr/>
+
+<h1>Reviews to complete</h1>
+{% if my_answer_sheets %}
+    <ul>
+    {% for answer_sheet in my_answer_sheets %}
+        <li><a href="{% url 'answer' answer_sheet.id %}">
+          {{ answer_sheet.review.review_template }} for
+          {{ answer_sheet.review.owner }}
+        </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no reviews to complete.</p>
+{% endif %}
+{% endblock %}

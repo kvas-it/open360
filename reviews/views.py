@@ -1,4 +1,4 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -7,7 +7,11 @@ from . import models
 
 @login_required
 def index(request):
-    return HttpResponse('My reviews')
+    reviews = models.Review.objects.filter(owner=request.user)
+    answer_sheets = models.AnswerSheet.objects.filter(owner=request.user)
+    return render(request, 'reviews/index.html', {
+        'my_reviews': reviews, 'my_answer_sheets': answer_sheets
+    })
 
 
 @login_required
