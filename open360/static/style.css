@@ -1,0 +1,20 @@
+body {
+	font-family: Helvetica, Sans-serif;
+	margin: 5pt 5pt;
+}
+
+#content {
+	margin: 5pt 15pt;
+}
+
+input[type="text"].wide {
+	width: 400pt;
+}
+
+.question {
+	margin-bottom: 15pt;
+}
+
+.answer {
+	margin-top: 5pt;
+}
