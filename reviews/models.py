@@ -13,6 +13,7 @@ class ReviewTemplate(models.Model):
 
 
 class ReviewerClass(models.Model):
+    review_template = models.ForeignKey(ReviewTemplate)
     name = models.CharField(max_length=200, unique=True)
     descr = models.CharField(max_length=4096)
     is_self = models.BooleanField()
