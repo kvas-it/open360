@@ -52,8 +52,8 @@ class Question(models.Model):
 class Review(models.Model):
     review_template = models.ForeignKey(ReviewTemplate)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
     is_started = models.BooleanField()
     is_comleted = models.BooleanField()
 
