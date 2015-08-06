@@ -48,7 +48,7 @@ class AnswerSheet(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     reviewer_class = models.ForeignKey(ReviewerClass)
     is_started = models.BooleanField()
-    is_comleted = models.BooleanField()
+    is_completed = models.BooleanField()
 
 
 class Answer(models.Model):
