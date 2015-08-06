@@ -5,14 +5,21 @@
 <p>
 Providing answers as {{ answer_sheet.reviewer_class.name }}.
 </p>
-{% for group_rec in answer_data %}
-<h2>{{ group_rec.question_group.name }}</h2>
-    <ul>
+<form action="{% url 'reviews:save-answers' answer_sheet.id %}" method="post">
+    {% csrf_token %}
+    {% for group_rec in answer_data %}
+    <h2>{{ group_rec.question_group.name }}</h2>
     {% for question_rec in group_rec.questions %}
-        <li>
-	{{ question_rec.question.text }}: {{ question_rec.answer }}
-	</li>
+        <div class="question">
+            {{ question_rec.question.text }}
+            <div class="answer">
+                <input type="text"
+                  name="answer_{{ question_rec.question.id }}"
+                  value="{{ question_rec.answer_value }}" />
+            </div>
+        </div>
     {% endfor %}
-    </ul>
-{% endfor %}
+    {% endfor %}
+    <input type="submit" value="Save answers" />
+</form>
 {% endblock %}
