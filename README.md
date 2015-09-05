@@ -6,15 +6,15 @@ Makefile can be used for performing basic tasks:
 
 * Create virtualenv and install requirements:
 
-    $ make env
+        $ make env
 
 * Create database:
 
-    $ make db
+        $ make db
 
 * Run debug server:
 
-    $ make run
+        $ make run
 
 At the moment most of the content can only be created using Django admin
 interface. The only things that we have 'proper' UI for are creating the review
