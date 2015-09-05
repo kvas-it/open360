@@ -10,6 +10,7 @@ from . import models
 
 @login_required
 def index(request):
+    """View: homepage of the reviews app."""
     reviews = models.Review.objects.filter(owner=request.user)
     answer_sheets = models.AnswerSheet.objects.filter(owner=request.user)
     return render(request, 'reviews/index.html', {
@@ -19,6 +20,7 @@ def index(request):
 
 @login_required
 def review(request, review_id):
+    """View: review overview page."""
     review = get_object_or_404(models.Review, pk=review_id)
     if review.owner != request.user:
         raise PermissionDenied('Review belongs to another user')
@@ -52,6 +54,7 @@ def prepare_answer_data(answer_sheet):
 
 @login_required
 def answer_sheet(request, answer_sheet_id):
+    """View: answer sheet editing form."""
     answer_sheet = get_object_or_404(models.AnswerSheet, pk=answer_sheet_id)
     if answer_sheet.owner != request.user:
         raise PermissionDenied('Answers belong to another user')
@@ -83,6 +86,7 @@ def store_answer_data(answer_sheet, answer_values):
 @login_required
 @require_POST
 def save_answers(request, answer_sheet_id):
+    """View: save answer sheet data and redirect back to the form."""
     answer_sheet = get_object_or_404(models.AnswerSheet, pk=answer_sheet_id)
     if answer_sheet.owner != request.user:
         raise PermissionDenied('Answers belong to another user')
