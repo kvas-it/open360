@@ -19,6 +19,17 @@ def index(request):
     })
 
 
+def include_reviewer(review, reviewer, reviewer_class):
+    """Add reviewer to the review (i.e. create an answer sheet)."""
+    answer_sheet = models.AnswerSheet(
+            review=review,
+            owner=reviewer,
+            reviewer_class=reviewer_class,
+            is_started=False,
+            is_completed=False)
+    answer_sheet.save()
+
+
 @login_required
 @require_POST
 def create_review(request):
@@ -34,6 +45,9 @@ def create_review(request):
             is_started=False,
             is_completed=False)
     review.save()
+    self_class = template.get_self_reviewer_class()
+    if self_class:
+        include_reviewer(review, request.user, self_class)
     redirect_url = reverse('reviews:review', args=(review.id,))
     return HttpResponseRedirect(redirect_url)
 

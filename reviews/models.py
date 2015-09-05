@@ -18,6 +18,16 @@ class ReviewTemplate(models.Model):
             ret = ret.order_by('order')
         return ret
 
+    def get_reviewer_classes(self):
+        """Return reviewer classes from this review template."""
+        return ReviewerClass.objects.filter(review_template=self)
+
+    def get_self_reviewer_class(self):
+        """Return reviewer class for review owner."""
+        for rc in self.get_reviewer_classes():
+            if rc.is_self:
+                return rc
+
     def __unicode__(self):
         return self.name
 
