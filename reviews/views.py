@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_POST
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
@@ -80,6 +81,7 @@ def store_answer_data(answer_sheet, answer_values):
 
 
 @login_required
+@require_POST
 def save_answers(request, answer_sheet_id):
     answer_sheet = get_object_or_404(models.AnswerSheet, pk=answer_sheet_id)
     if answer_sheet.owner != request.user:
