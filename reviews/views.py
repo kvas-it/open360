@@ -11,11 +11,31 @@ from . import models
 @login_required
 def index(request):
     """View: homepage of the reviews app."""
-    reviews = models.Review.objects.filter(owner=request.user)
-    answer_sheets = models.AnswerSheet.objects.filter(owner=request.user)
     return render(request, 'reviews/index.html', {
-        'my_reviews': reviews, 'my_answer_sheets': answer_sheets
+        'my_reviews': models.Review.objects.filter(owner=request.user),
+        'my_answer_sheets': 
+                models.AnswerSheet.objects.filter(owner=request.user),
+        'templates': models.ReviewTemplate.objects.all()
     })
+
+
+@login_required
+@require_POST
+def create_review(request):
+    """View: create new review for current user."""
+    try:
+        template_id = int(request.POST['template_id'])
+    except (KeyError, ValueError):
+        template_id = -1  # This will cause an HTTP 404.
+    template = get_object_or_404(models.ReviewTemplate, pk=template_id)
+    review = models.Review(
+            review_template=template,
+            owner=request.user,
+            is_started=False,
+            is_completed=False)
+    review.save()
+    redirect_url = reverse('reviews:review', args=(review.id,))
+    return HttpResponseRedirect(redirect_url)
 
 
 @login_required

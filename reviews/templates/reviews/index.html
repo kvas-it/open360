@@ -19,6 +19,17 @@
     <p>You have no reviews.</p>
 {% endif %}
 
+<form action="{% url 'reviews:create-review' %}" method="post">
+    {% csrf_token %}
+    Create review from template: 
+    <select name="template_id">
+        {% for template in templates %}
+        <option value="{{ template.id }}">{{ template.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" name="create" value="Create" />
+</form>
+
 <hr/>
 
 <h1>Reviews to complete</h1>
