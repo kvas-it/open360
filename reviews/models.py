@@ -69,7 +69,7 @@ class Review(models.Model):
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     is_started = models.BooleanField()
-    is_comleted = models.BooleanField()
+    is_completed = models.BooleanField()
 
     def __unicode__(self):
         return u'Review of ' + unicode(self.owner)
