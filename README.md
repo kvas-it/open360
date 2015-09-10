@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/kvas-it/open360.png?label=ready&title=Ready)](https://waffle.io/kvas-it/open360)
 # Open360 - simple 360-degree review app
 
 Open360 is a very basic [360-degree review] [1] application built using Django.
